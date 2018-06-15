@@ -5,11 +5,20 @@
 #ifndef ILLUMINATIONMODEL_MATERIAL_HPP
 #define ILLUMINATIONMODEL_MATERIAL_HPP
 
+#include<vector>
+using namespace std;
+
 struct Material {
-    float ambient;
-    float diffuse;
-    float specular;
-    Material(float a, float d, float s): ambient(a), diffuse(d), specular(s) {}
+    float ambient[3];
+    float diffuse[3];
+    float specular[3];
+    Material(vector<float> a, vector<float> d, vector<float> s) {
+        for(int i=0;i<3;i++) {
+            ambient[i] = a[i];
+            diffuse[i] = d[i];
+            specular[i] = s[i];
+        }
+    }
 };
 
 #endif //ILLUMINATIONMODEL_MATERIAL_HPP
