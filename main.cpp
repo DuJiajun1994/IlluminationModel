@@ -9,8 +9,8 @@
 using namespace std;
 
 int main() {
-    vector<Object> objects;
-    vector<Light> lights;
+    vector<Object*> objects;
+    vector<Light*> lights;
     Scene scene(objects, lights);
     string filename = "image.ppm";
     int height = 1024, width = 1920;

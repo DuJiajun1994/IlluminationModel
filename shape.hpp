@@ -5,8 +5,12 @@
 #ifndef ILLUMINATIONMODEL_SHAPE_HPP
 #define ILLUMINATIONMODEL_SHAPE_HPP
 
-class Shape {
+#include <glm/glm.hpp>
+using namespace glm;
 
+class Shape {
+public:
+    virtual bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point) = 0;
 };
 
 #endif //ILLUMINATIONMODEL_SHAPE_HPP

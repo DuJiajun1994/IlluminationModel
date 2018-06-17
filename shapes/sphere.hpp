@@ -15,6 +15,9 @@ private:
     float radius;
 public:
     Sphere(float x, float y, float z, float r): center(x, y, z), radius(r) {}
+    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point) {
+
+    }
 };
 
 #endif //ILLUMINATIONMODEL_SPHERE_HPP
