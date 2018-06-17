@@ -9,10 +9,10 @@
 using namespace glm;
 
 class Light {
-private:
-    vec3 intensity; // R, G, B
 public:
-    Light(float r, float g, float b): intensity(r, g, b) {}
+    vec3 intensity; // R, G, B
+    vec3 position;
+    Light(float r, float g, float b, float x, float y, float z): intensity(r, g, b), position(x, y, z) {}
 };
 
 #endif //ILLUMINATIONMODEL_LIGHT_HPP

@@ -12,7 +12,7 @@ int main() {
     vector<Object*> objects;
     vector<Light*> lights;
     Scene scene(objects, lights);
-    string filename = "image.ppm";
+    string filename = "G:\\github_project\\IlluminationModel\\image.ppm";
     int height = 1024, width = 1920;
     scene.to_image(filename, height, width);
     return 0;

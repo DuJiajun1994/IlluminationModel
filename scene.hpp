@@ -35,12 +35,12 @@ private:
         }
     }
 
-    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, Material &material) {
+    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal, Material &material) {
         float dist = numeric_limits<float>::max();
         bool has_hit = false;
         for(auto object: objects) {
-            vec3 tmp_hit_point;
-            bool tmp_hit = object->hit(ray_point, ray_direction, tmp_hit_point);
+            vec3 tmp_hit_point, tmp_hit_normal;
+            bool tmp_hit = object->hit(ray_point, ray_direction, tmp_hit_point, tmp_hit_normal);
             has_hit = tmp_hit || has_hit;
             if(tmp_hit) {
                 float tmp_distance = distance(ray_point, tmp_hit_point);
@@ -53,9 +53,22 @@ private:
         return has_hit;
     }
 
-    vec3 get_intensity(int x, int y, vec3 &point, Material &material) {
+    vec3 get_intensity(vec3 view_direction, vec3 hit_point, vec3 hit_normal, Material &material) {
+        vec3 intensity(0, 0, 0);
+        for(auto light: lights) {
+            vec3 light_direction;
+            bool is_blocked = is_blocked(light_direction, hit_point);
+            if(!is_blocked) {
+
+            }
+        }
+        return intensity;
+    }
+
+    bool is_blocked(vec3 light_direction, vec3 hit_point) {
 
     }
+
 public:
     Scene(vector<Object*> o, vector<Light*> l): objects(o), lights(l) {}
     void to_image(string filename, int height, int width) {
@@ -63,14 +76,14 @@ public:
         for(int i=0;i<height;i++) {
             for(int j=0;j<width;j++) {
                 vec3 ray_point, ray_direction;
-                vec3 hit_point;
+                vec3 hit_point, hit_normal;
                 Material material;
-                bool has_hit = hit(ray_point, ray_direction, hit_point, material);
+                bool has_hit = hit(ray_point, ray_direction, hit_point, hit_normal, material);
                 if(has_hit) {
-                    vec3 intensity = get_intensity(i, j, point, material);
-                    image[i][j][0] += intensity.r;
-                    image[i][j][1] += intensity.g;
-                    image[i][j][2] += intensity.b;
+                    vec3 intensity = get_intensity(ray_point, hit_point, hit_normal, material);
+                    image[i][j][0] = intensity.r;
+                    image[i][j][1] = intensity.g;
+                    image[i][j][2] = intensity.b;
                 }
             }
         }

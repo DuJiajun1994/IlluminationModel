@@ -16,7 +16,7 @@ private:
     float height;
 public:
     Cylinder(float x, float y, float z, float r, float h): center(x, y, z), radius(r), height(h) {}
-    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point) {
+    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal) {
 
     }
 };

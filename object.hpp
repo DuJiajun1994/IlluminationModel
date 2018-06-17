@@ -14,8 +14,8 @@ private:
 public:
     Material *material;
     Object(Shape *s, Material *m): shape(s), material(m) {}
-    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point) {
-        return shape->hit(ray_point, ray_direction, hit_point);
+    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal) {
+        return shape->hit(ray_point, ray_direction, hit_point, hit_normal);
     }
 };
 
