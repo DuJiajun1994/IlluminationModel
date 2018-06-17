@@ -5,17 +5,17 @@
 #ifndef ILLUMINATIONMODEL_CYLINDER_HPP
 #define ILLUMINATIONMODEL_CYLINDER_HPP
 
-#include "../shape.hpp"
+#include "../object.hpp"
 #include <glm/glm.hpp>
 using namespace glm;
 
-class Cylinder: public Shape {
+class Cylinder: public Object {
 private:
     vec3 center; // center of the bottom circle
     float radius;
     float height;
 public:
-    Cylinder(float x, float y, float z, float r, float h): center(x, y, z), radius(r), height(h) {}
+    Cylinder(vec3 a, vec3 d, vec3 s, vec3 c, float r, float h): center(c), radius(r), height(h), Object(a, d, s) {}
     bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal) {
 
     }

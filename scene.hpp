@@ -10,7 +10,6 @@
 #include <string>
 #include <limits>
 #include <glm/glm.hpp>
-#include "material.hpp"
 #include "object.hpp"
 #include "light.hpp"
 using namespace std;
@@ -35,7 +34,7 @@ private:
         }
     }
 
-    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal, Material &material) {
+    bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal, vec3 &ambient, vec3 &diffuse, vec3 &specular) {
         float dist = numeric_limits<float>::max();
         bool has_hit = false;
         for(auto object: objects) {
@@ -46,14 +45,17 @@ private:
                 float tmp_distance = distance(ray_point, tmp_hit_point);
                 if(tmp_distance < dist) {
                     hit_point = tmp_hit_point;
-                    material = *(object->material);
+                    hit_normal = tmp_hit_normal;
+                    ambient = object->ambient;
+                    diffuse = object->diffuse;
+                    specular = object->specular;
                 }
             }
         }
         return has_hit;
     }
 
-    vec3 get_intensity(vec3 view_direction, vec3 hit_point, vec3 hit_normal, Material &material) {
+    vec3 get_intensity(vec3 view_direction, vec3 hit_point, vec3 hit_normal, vec3 &ambient, vec3 &diffuse, vec3 &specular) {
         vec3 intensity(0, 0, 0);
         for(auto light: lights) {
             vec3 light_direction;
@@ -77,10 +79,10 @@ public:
             for(int j=0;j<width;j++) {
                 vec3 ray_point, ray_direction;
                 vec3 hit_point, hit_normal;
-                Material material;
-                bool has_hit = hit(ray_point, ray_direction, hit_point, hit_normal, material);
+                vec3 ambient, diffuse, specular;
+                bool has_hit = hit(ray_point, ray_direction, hit_point, hit_normal, ambient, diffuse, specular);
                 if(has_hit) {
-                    vec3 intensity = get_intensity(ray_point, hit_point, hit_normal, material);
+                    vec3 intensity = get_intensity(ray_point, hit_point, hit_normal, ambient, diffuse, specular);
                     image[i][j][0] = intensity.r;
                     image[i][j][1] = intensity.g;
                     image[i][j][2] = intensity.b;
