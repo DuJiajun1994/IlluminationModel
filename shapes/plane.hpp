@@ -10,13 +10,16 @@
 using namespace glm;
 
 class Plane: public Object {
-private:
-    vec3 point;
-    vec3 normal; // direction of normal vector
 public:
-    Plane(vec3 a, vec3 d, vec3 s, vec3 p, vec3 n): point(p), normal(n), Object(a, d, s) {}
+    Plane(vec3 a, vec3 d, vec3 s): Object(a, d, s) {}
     bool hit(vec3 ray_point, vec3 ray_direction, vec3 &hit_point, vec3 &hit_normal) {
-
+        if(ray_point.z >= 0) return false;
+        float t = ray_point.z / ray_direction.z;
+        float x = ray_point.x - ray_direction.x * t;
+        float y = ray_point.y - ray_direction.y * t;
+        hit_point = vec3(x, y, 0);
+        hit_normal = vec3(0, 0, 1);
+        return true;
     }
 };
 

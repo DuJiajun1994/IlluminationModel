@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 #include "object.hpp"
 #include "light.hpp"
+#include "camera.hpp"
 using namespace std;
 using namespace glm;
 
@@ -19,6 +20,7 @@ class Scene {
 private:
     vector<Object*> objects;
     vector<Light*> lights;
+    Camera camera;
     void save_image(string filename, const vector<vector<vector<float>>> &image) {
         int height = image.size(), width = image[0].size();
         ofstream out(filename, ios::out | ios::binary);
@@ -55,7 +57,7 @@ private:
         return has_hit;
     }
 
-    vec3 get_intensity(vec3 view_direction, vec3 hit_point, vec3 hit_normal, vec3 &ambient, vec3 &diffuse, vec3 &specular) {
+    vec3 get_intensity(vec3 ray_direction, vec3 hit_point, vec3 hit_normal, vec3 &ambient, vec3 &diffuse, vec3 &specular) {
         vec3 intensity(0, 0, 0);
         for(auto light: lights) {
             vec3 light_direction;
@@ -72,17 +74,20 @@ private:
     }
 
 public:
-    Scene(vector<Object*> o, vector<Light*> l): objects(o), lights(l) {}
-    void to_image(string filename, int height, int width) {
+    Scene(vector<Object*> o, vector<Light*> l, Camera c): objects(o), lights(l), camera(c) {}
+    void to_image(string filename) {
+        int height = camera.height;
+        int width = camera.width;
         vector<vector<vector<float>>> image(height, vector<vector<float>>(width, vector<float>(3, 0)));
+        vec3 ray_point = camera.origin;
         for(int i=0;i<height;i++) {
             for(int j=0;j<width;j++) {
-                vec3 ray_point, ray_direction;
+                vec3 ray_direction = camera.ray_direction(i, j);
                 vec3 hit_point, hit_normal;
                 vec3 ambient, diffuse, specular;
                 bool has_hit = hit(ray_point, ray_direction, hit_point, hit_normal, ambient, diffuse, specular);
                 if(has_hit) {
-                    vec3 intensity = get_intensity(ray_point, hit_point, hit_normal, ambient, diffuse, specular);
+                    vec3 intensity = get_intensity(ray_direction, hit_point, hit_normal, ambient, diffuse, specular);
                     image[i][j][0] = intensity.r;
                     image[i][j][1] = intensity.g;
                     image[i][j][2] = intensity.b;
