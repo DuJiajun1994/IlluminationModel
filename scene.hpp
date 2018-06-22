@@ -78,7 +78,19 @@ private:
     }
 
     bool is_blocked(vec3 light_direction, vec3 hit_point) {
-        return false;
+        bool blocked = false;
+        for(auto object: objects) {
+            vec3 tmp_hit_point, tmp_hit_normal;
+            bool tmp_hit = object->hit(hit_point, light_direction, tmp_hit_point, tmp_hit_normal);
+            if(tmp_hit) {
+                float indicate = dot(light_direction, hit_point - tmp_hit_point);
+                if(indicate < 0) {
+                    blocked = true;
+                    break;
+                }
+            }
+        }
+        return blocked;
     }
 
 public:
