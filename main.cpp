@@ -14,8 +14,8 @@ using namespace std;
 
 int main() {
     vector<Object*> objects;
-    Object *plane = new Plane({0, 0, 0}, {255, 0, 0}, {0, 0, 0});
-    Object *sphere = new Sphere({0, 0, 0}, {0, 255, 0}, {0, 0, 0}, {0, 0, 1}, 1);
+    Object *plane = new Plane({50, 0, 0}, {100, 0, 0}, {0, 0, 0});
+    Object *sphere = new Sphere({0, 50, 0}, {0, 100, 0}, {0, 100, 0}, {0, 0, 1}, 1);
     objects.push_back(plane);
     objects.push_back(sphere);
     vector<Light*> lights;

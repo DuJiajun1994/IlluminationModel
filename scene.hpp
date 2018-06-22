@@ -64,9 +64,14 @@ private:
         for(auto light: lights) {
             vec3 light_direction = normalize(light->position - hit_point);
             bool blocked = is_blocked(light_direction, hit_point);
-            float product = dot(light_direction, hit_normal);
-            if(!blocked && product > 0) {
-                intensity += light->intensity * diffuse * product;
+            float product1 = dot(light_direction, hit_normal);
+            if(!blocked && product1 > 0) {
+                intensity += light->intensity * diffuse * product1;
+                vec3 reflection_vector = hit_normal * (2 * product1) - light_direction;
+                float product2 = dot(reflection_vector, ray_direction);
+                if(product2 > 0) {
+                    intensity += light->intensity * specular * float(pow(product2, 5));
+                }
             }
         }
         return intensity;
