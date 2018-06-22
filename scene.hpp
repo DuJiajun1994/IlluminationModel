@@ -57,20 +57,23 @@ private:
         return has_hit;
     }
 
-    vec3 get_intensity(vec3 ray_direction, vec3 hit_point, vec3 hit_normal, vec3 &ambient, vec3 &diffuse, vec3 &specular) {
-        vec3 intensity(0, 0, 0);
+    vec3 get_intensity(vec3 ray_direction, vec3 hit_point, vec3 hit_normal, vec3 ambient, vec3 diffuse, vec3 specular) {
+        vec3 intensity = ambient;
+        ray_direction = normalize(- ray_direction);
+        hit_normal = normalize(hit_normal);
         for(auto light: lights) {
-            vec3 light_direction;
-            bool is_blocked = is_blocked(light_direction, hit_point);
-            if(!is_blocked) {
-
+            vec3 light_direction = normalize(light->position - hit_point);
+            bool blocked = is_blocked(light_direction, hit_point);
+            float product = dot(light_direction, hit_normal);
+            if(!blocked && product > 0) {
+                intensity += light->intensity * diffuse * product;
             }
         }
         return intensity;
     }
 
     bool is_blocked(vec3 light_direction, vec3 hit_point) {
-
+        return false;
     }
 
 public:

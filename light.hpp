@@ -12,7 +12,7 @@ class Light {
 public:
     vec3 intensity; // R, G, B
     vec3 position;
-    Light(float r, float g, float b, float x, float y, float z): intensity(r, g, b), position(x, y, z) {}
+    Light(vec3 i, vec3 p): intensity(i), position(p) {}
 };
 
 #endif //ILLUMINATIONMODEL_LIGHT_HPP
