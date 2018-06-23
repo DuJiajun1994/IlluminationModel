@@ -27,10 +27,8 @@ public:
         float delta = b * b - 4 * a * c;
         if(delta < 0) return false;
         float t = (- b - sqrt(delta)) / (2 * a);
-        for(int i=0;i<3;i++) {
-            hit_point[i] = ray_point[i] + ray_direction[i] * t;
-            hit_normal[i] = hit_point[i] - center[i];
-        }
+        hit_point = ray_point + ray_direction * t;
+        hit_normal = hit_point - center;
         hit_normal = normalize(hit_normal);
         return true;
     }
