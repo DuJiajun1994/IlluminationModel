@@ -66,11 +66,13 @@ private:
             bool blocked = is_blocked(light_direction, hit_point);
             float product1 = dot(light_direction, hit_normal);
             if(!blocked && product1 > 0) {
-                intensity += light->intensity * diffuse * product1;
+                float light_distance = distance(light->position, hit_point);
+                float factor = std::min(1000 / (light_distance * light_distance), float(1.));
+                intensity += light->intensity * diffuse * product1 * factor;
                 vec3 reflection_vector = hit_normal * (2 * product1) - light_direction;
                 float product2 = dot(reflection_vector, ray_direction);
                 if(product2 > 0) {
-                    intensity += light->intensity * specular * float(pow(product2, 5));
+                    intensity += light->intensity * specular * float(pow(product2, 5)) * factor;
                 }
             }
         }
