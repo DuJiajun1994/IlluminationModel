@@ -11,13 +11,20 @@
 #include "objects/plane.hpp"
 #include "objects/sphere.hpp"
 #include "objects/cylinder.hpp"
+#include "objects/cube.hpp"
 using namespace std;
 
 int main() {
     vector<Object*> objects;
     objects.push_back(new Plane({50, 50, 50}, {100, 100, 100}, {100, 100, 100}, 11));
-    objects.push_back(new Sphere({0, 50, 0}, {0, 100, 0}, {0, 100, 0}, {4, 0, 2}, 2));
+    objects.push_back(new Cube({50, 0, 0}, {100, 0, 0}, {100, 0, 0}, {4, -6, 2}, 2));
+    objects.push_back(new Cube({50, 0, 50}, {100, 0, 100}, {100, 0, 100}, {7, -6, 1}, 1));
+    objects.push_back(new Sphere({0, 50, 50}, {0, 100, 100}, {0, 100, 100}, {4, 0, 2}, 2));
+    objects.push_back(new Sphere({50, 0, 0}, {100, 0, 0}, {100, 0, 0}, {10, -3, 1}, 1));
+    objects.push_back(new Sphere({50, 50, 0}, {100, 100, 0}, {100, 100, 0}, {10, 0, 1}, 1));
+    objects.push_back(new Sphere({0, 50, 0}, {0, 100, 0}, {0, 100, 0}, {10, 3, 1}, 1));
     objects.push_back(new Cylinder({0, 0, 50}, {0, 0, 100}, {0, 0, 100}, {4, 6, 4}, 2));
+    objects.push_back(new Sphere({50, 50, 50}, {100, 100, 100}, {100, 100, 100}, {4, 6, 5}, 1));
     vector<Light*> lights;
     lights.push_back(new Light({0.5, 0.5, 0.5}, {0, 0, 40}));
     lights.push_back(new Light({0.5, 0.5, 0.5}, {10, -10, 4}));
