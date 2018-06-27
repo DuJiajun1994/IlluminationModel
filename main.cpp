@@ -30,7 +30,7 @@ int main() {
     lights.push_back(new Light({0.5, 0.5, 0.5}, {10, -10, 4}));
     Camera camera(1024, 1920, 0.001, 1, M_PI / 6, {20, 0, 10});
     Scene scene(objects, lights, camera);
-    string filename = "/home/dujiajun/project/IlluminationModel/image.ppm";
+    string filename = "image.ppm";
     scene.to_image(filename);
     return 0;
 }
